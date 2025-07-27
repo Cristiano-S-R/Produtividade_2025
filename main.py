@@ -3,7 +3,7 @@ import pandas as pd
 from PIL import Image
 
 logo = Image.open("logo_geriba.jpg")  # Substitua pelo seu caminho
-
+st.image(logo, width=100)  # Ajuste a largura
 
 
 
