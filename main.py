@@ -3,11 +3,9 @@ import pandas  as pd
 
 import streamlit as st
 
-st.markdown("---")
-st.caption("© 2025 GERIBA - Todos os direitos reservados")
 
 st.set_page_config(
-    page_title="Título do Seu App",
+    page_title="Grupo Geriba",
     page_icon="🔒",
     layout="centered",  # ou "wide"
     initial_sidebar_state="collapsed",  # opcional: recolhe a sidebar
