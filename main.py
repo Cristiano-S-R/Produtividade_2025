@@ -1,53 +1,39 @@
 import streamlit as st
-import pandas  as pd
+import pandas as pd
+from PIL import Image
 
-import streamlit as st
+logo = Image.open("C:/Users/cris/Documents/Streamlit/logo_geriba.jpg")  # Substitua pelo seu caminho
+st.image(logo, width=100)  # Ajuste a largura
 
 
-st.set_page_config(
-    page_title="Grupo Geriba",
-    page_icon="🔒",
-    layout="centered",  # ou "wide"
-    initial_sidebar_state="collapsed",  # opcional: recolhe a sidebar
-    menu_items={
-        'Get Help': None,  # Remove link "Get Help"
-        'Report a bug': None,  # Remove link "Report a bug"
-        'About': None  # Remove seção "About"
-    }
-)
-
-# Esconde o menu padrão e rodapé via CSS
-hide_st_style = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    </style>
-"""
-st.markdown(hide_st_style, unsafe_allow_html=True)
 
 st.markdown("""
-                 # Sistema de mapas 
+            # Grupo GERIBA
+            
+            ## Análise padronizada
+               Carregue uma base padrão e gere vários relatórios pré programada em um clique. Aumente sua produtividade e confiabilidade em seus dados.
+           """)
 
-                  Seja muito bem vindo a revoução
+# Carrega a imagem (de um arquivo local ou URL)
 
 
+formulario = st.file_uploader(label="Carregue seu arquivo Excel :", type=['xlsx'])
 
+if formulario:
+    filtro_02 = st.expander('Análises', expanded=True)
+    tema01, tema02 = filtro_02.tabs(['Evolução Faturamento', 'Evolução Cobertura'])
+    df = pd.read_excel(formulario)
+    df['data'] = pd.to_datetime(df['data'])
+    df['Faturamento_Acumulado'] = df['Faturamento'].cumsum()
 
-                    """
+    tema01.line_chart(
+    data=df,
+    x='data',          # Coluna para o eixo X
+    y='Faturamento_Acumulado'    # Coluna para o eixo Y
 )
 
-formulario = st.file_uploader(label="Carregue seu arquivo :",type=['xlsx'])
 
 
-if formulario:
-    filtro_01 = st.expander('Bloco 01')
-    df = pd.read_excel(formulario)
-    filtro_01.dataframe(df)
-
-if formulario:
-    filtro_02 = st.expander('Bloco 02')
-    tema01,tema02 =filtro_02.tabs(['Tema 01','Tema 02'])
-    df = pd.read_excel(formulario)
-    tema01.line_chart(df)
-    tema02.bar_chart(df)
+    tema02.bar_chart(df,
+       x='Vendedor',      # Coluna para o eixo X
+       y='Faturamento'              )
