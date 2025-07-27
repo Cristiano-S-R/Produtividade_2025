@@ -11,7 +11,7 @@ st.markdown("""
             # Grupo GERIBA
             
             ## Análise padronizada
-               Carregue uma base padrão e gere vários relatórios pré programada em um clique. Aumente sua produtividade e confiabilidade em seus dados.
+               Carregue uma base padrão e gere vários relatórios pré programados em um clique. Aumente sua produtividade e confiabilidade em seus dados.
            """)
 
 # Carrega a imagem (de um arquivo local ou URL)
