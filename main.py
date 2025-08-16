@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 
-logo = Image.open("logo_geriba.jpg")  # Substitua pelo seu caminho
+logo = Image.open("Agro_Analilycs.webp")  # Substitua pelo seu caminho
 st.image(logo, width=100)  # Ajuste a largura
 
 
@@ -37,3 +37,4 @@ if formulario:
     tema02.bar_chart(df,
        x='Vendedor',      # Coluna para o eixo X
        y='Faturamento'              )
+
