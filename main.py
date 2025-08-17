@@ -2,16 +2,21 @@ import streamlit as st
 import folium
 from streamlit_folium import folium_static
 import geopandas as gpd
+import gdown
 
 
 st.set_page_config(layout="wide")
 
 # URL direta do Google Drive
 file_id = "1LLsanCjUXpeGhujc9hZE40NOzMCkFxby"
-url = f"https://drive.google.com/uc?export=download&id={file_id}"
-       
-# Carrega os dados
-gdf = gpd.read_file(f"zip://{url}")
+url = f"https://drive.google.com/uc?id={file_id}"
+output = "municipios.zip"
+
+# Baixa o arquivo localmente
+gdown.download(url, output, quiet=False)
+
+# Lê o shapefile zipado
+gdf = gpd.read_file(f"zip://{output}")
 
 st.sidebar.image("logo_agro.jpg", use_container_width=True)
 # Lista de estados únicos
@@ -55,6 +60,7 @@ folium.GeoJson(
 
 # Folium_static com largura em pixels (ex.: 1200)
 folium_static(m, width=1200, height=520)
+
 
 
 
