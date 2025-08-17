@@ -5,5 +5,7 @@ altair==5.5.0
 numpy>=2.0.0
 folium==0.20.0
 streamlit-folium>=0.11.0
+geopandas==1.1.1
+
 
 
