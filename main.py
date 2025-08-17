@@ -16,10 +16,10 @@ url = f"https://drive.google.com/uc?export=download&id={file_id}"
 # Nome do arquivo local
 output = "BR_Municipios_2024.zip"
 
-# Baixar o arquivo
-gdown.download(url, output, quiet=False)
+# Baixar o arquivo (substitui se já existir)
+gdown.download(url, output, quiet=False, overwrite=True)
 
-# Se for shapefile dentro de um zip
+# Ler shapefile dentro do zip
 gdf = gpd.read_file(f"zip://{output}")
 print(gdf.head())
 
@@ -65,6 +65,7 @@ folium.GeoJson(
 
 # Folium_static com largura em pixels (ex.: 1200)
 folium_static(m, width=1200, height=520)
+
 
 
 
