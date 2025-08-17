@@ -6,31 +6,31 @@ import gdown
 
 
 st.set_page_config(layout="wide")
-import gdown
+
+
 import zipfile
 import os
-import geopandas as gpd
 
-# ID do arquivo no Google Drive
-file_id = "1LLsanCjUXpeGhujc9hZE40NOzMCkFxby"
-url = f"https://drive.google.com/uc?id={file_id}"  # sem export=download
+
+# Link direto do Google Drive
+drive_link = "https://drive.google.com/file/d/1LLsanCjUXpeGhujc9hZE40NOzMCkFxby/view?usp=sharing"
 output_zip = "BR_Municipios_2024.zip"
 extracted_folder = "BR_Municipios_2024_folder"
 
-# Baixar do Drive (trata arquivos grandes)
+# Baixar do Drive usando gdown (fuzzy=True trata redirecionamentos de arquivos grandes)
 if not os.path.exists(output_zip):
-    gdown.download(url, output_zip, quiet=False, fuzzy=True)
+    gdown.download(drive_link, output_zip, quiet=False, fuzzy=True)
 
 # Verificar se o download deu certo
 if not os.path.exists(output_zip):
-    raise FileNotFoundError("O arquivo ZIP não foi baixado do Drive. Verifique o ID ou permissões.")
+    raise FileNotFoundError("O arquivo ZIP não foi baixado do Drive. Verifique o link ou permissões.")
 
 # Extrair zip
 if not os.path.exists(extracted_folder):
     with zipfile.ZipFile(output_zip, 'r') as zip_ref:
         zip_ref.extractall(extracted_folder)
 
-# Listar arquivos extraídos
+# Listar arquivos extraídos para encontrar o .shp
 shp_files = [f for f in os.listdir(extracted_folder) if f.endswith(".shp")]
 if not shp_files:
     raise FileNotFoundError("Nenhum arquivo .shp encontrado no zip extraído.")
@@ -83,6 +83,7 @@ folium.GeoJson(
 
 # Folium_static com largura em pixels (ex.: 1200)
 folium_static(m, width=1200, height=520)
+
 
 
 
