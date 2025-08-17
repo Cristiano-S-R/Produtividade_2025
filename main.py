@@ -7,7 +7,7 @@ import geopandas as gpd
 
 st.set_page_config(layout="wide")
 
-local = 'https://drive.google.com/file/d/1u26SePxto9RDASJigq5AT6EBkowW75LY/view?usp=drive_link'
+local = 'https://drive.google.com/file/d/1u26SePxto9RDASJigq5AT6EBkowW75LY/view?usp=sharing'
 gdf = gpd.read_file(local)
 
 
@@ -53,6 +53,7 @@ folium.GeoJson(
 
 # Folium_static com largura em pixels (ex.: 1200)
 folium_static(m, width=1200, height=520)
+
 
 
 
