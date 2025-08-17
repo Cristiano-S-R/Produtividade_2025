@@ -6,9 +6,14 @@ import geopandas as gpd
 
 
 st.set_page_config(layout="wide")
-local = 'https://drive.google.com/drive/folders/1pKRb41q2wQuIyBJRHH33dQezGXYSbKms?usp=sharing'
-gdf = gpd.read_file(local)
 
+# Baixa um arquivo (ex: .geojson)
+url = 'https://drive.google.com/file/d/1u26SePxto9RDASJigq5AT6EBkowW75LY/view?usp=sharing'  # Substitua pelo ID real!
+output = 'arquivo.geojson'
+gdown.download(url, output, quiet=False)
+
+# Lê o arquivo baixado
+gdf = gpd.read_file(output)
 
 st.sidebar.image("logo_agro.jpg", use_container_width=True)
 # Lista de estados únicos
@@ -52,6 +57,7 @@ folium.GeoJson(
 
 # Folium_static com largura em pixels (ex.: 1200)
 folium_static(m, width=1200, height=520)
+
 
 
 
