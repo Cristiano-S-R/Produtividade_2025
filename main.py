@@ -11,7 +11,7 @@ file_id = "1LLsanCjUXpeGhujc9hZE40NOzMCkFxby"
 url = f"https://drive.google.com/uc?export=download&id={file_id}"
        
 # Carrega os dados
-gdf = load_geojson_from_zip(url)
+gdf = gpd.read_file(f"zip://{url}")
 
 st.sidebar.image("logo_agro.jpg", use_container_width=True)
 # Lista de estados únicos
@@ -55,6 +55,7 @@ folium.GeoJson(
 
 # Folium_static com largura em pixels (ex.: 1200)
 folium_static(m, width=1200, height=520)
+
 
 
 
