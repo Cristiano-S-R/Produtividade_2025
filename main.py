@@ -7,7 +7,8 @@ import geopandas as gpd
 st.set_page_config(layout="wide")
 
 # Carregamento dados geoespacial do brasil
-url = 'https://drive.google.com/file/d/1LLsanCjUXpeGhujc9hZE40NOzMCkFxby/view?usp=sharing'
+url = 'https://drive.google.com/file/d/1LLsanCjUXpeGhujc9hZE40NOzMCkFxby/view?usp=drive_link'
+       
 gdf = gpd.read_file(f"zip://{url}")
 
 st.sidebar.image("logo_agro.jpg", use_container_width=True)
@@ -52,6 +53,7 @@ folium.GeoJson(
 
 # Folium_static com largura em pixels (ex.: 1200)
 folium_static(m, width=1200, height=520)
+
 
 
 
