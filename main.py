@@ -2,43 +2,12 @@ import streamlit as st
 import folium
 from streamlit_folium import folium_static
 import geopandas as gpd
-import gdown
+
 
 
 st.set_page_config(layout="wide")
-import gdown
-import zipfile
-import os
-import geopandas as gpd
-
-# Link direto do Google Drive
-direct_link = "https://drive.google.com/drive/folders/1pKRb41q2wQuIyBJRHH33dQezGXYSbKms?usp=sharing"
-output_zip = "BR_Municipios_2024.zip"
-extracted_folder = "BR_Municipios_2024_folder"
-
-# Baixar do Drive
-if not os.path.exists(output_zip):
-    gdown.download(direct_link, output_zip, quiet=False)
-
-# Verificar se o download deu certo
-if not os.path.exists(output_zip):
-    raise FileNotFoundError("O arquivo ZIP não foi baixado do Drive. Verifique o link ou permissões.")
-
-# Extrair zip
-if not os.path.exists(extracted_folder):
-    with zipfile.ZipFile(output_zip, 'r') as zip_ref:
-        zip_ref.extractall(extracted_folder)
-
-# Listar arquivos extraídos
-shp_files = [f for f in os.listdir(extracted_folder) if f.endswith(".shp")]
-if not shp_files:
-    raise FileNotFoundError("Nenhum arquivo .shp encontrado no zip extraído.")
-
-shp_path = os.path.join(extracted_folder, shp_files[0])
-
-# Ler shapefile
-gdf = gpd.read_file(shp_path)
-print(gdf.head())
+local = 'https://drive.google.com/drive/folders/1pKRb41q2wQuIyBJRHH33dQezGXYSbKms?usp=sharing'
+gdf = gpd.read_file(local)
 
 
 st.sidebar.image("logo_agro.jpg", use_container_width=True)
@@ -83,6 +52,7 @@ folium.GeoJson(
 
 # Folium_static com largura em pixels (ex.: 1200)
 folium_static(m, width=1200, height=520)
+
 
 
 
