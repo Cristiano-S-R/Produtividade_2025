@@ -1,41 +1,55 @@
 import streamlit as st
-import pandas as pd
-from PIL import Image
-
-logo = Image.open("logo_agro.jpg")  # Substitua pelo seu caminho
-st.image(logo, width=100)  # Ajuste a largura
+import folium
+from streamlit_folium import folium_static
+import geopandas as gpd
 
 
+st.set_page_config(layout="wide")
 
-st.markdown("""
-            # Grupo GERIBA
-            
-            ## Análise padronizada
-               Carregue uma base padrão e gere vários relatórios pré programados em um clique. Aumente sua produtividade e confiabilidade em seus dados.
-           """)
+# Carregamento dados geoespacial do brasil
+local = 'BR_Municipios_2024'
+gdf = gpd.read_file(local)
 
-# Carrega a imagem (de um arquivo local ou URL)
+st.sidebar.image("logo_agro.jpg", use_container_width=True)
+# Lista de estados únicos
+estados = sorted(list(gdf['NM_UF'].unique()))
 
+# Agora o selectbox fica dentro do sidebar
+# Remove Paraná e coloca no começo
+estados.remove("Paraná")  # ou "Paraná", dependendo da sua coluna
+estados = ["Paraná"] + estados
 
-formulario = st.file_uploader(label="Carregue seu arquivo Excel :", type=['xlsx'])
-
-if formulario:
-    filtro_02 = st.expander('Análises', expanded=True)
-    tema01, tema02 = filtro_02.tabs(['Evolução Faturamento', 'Evolução Cobertura'])
-    df = pd.read_excel(formulario)
-    df['data'] = pd.to_datetime(df['data'])
-    df['Faturamento_Acumulado'] = df['Faturamento'].cumsum()
-
-    tema01.line_chart(
-    data=df,
-    x='data',          # Coluna para o eixo X
-    y='Faturamento_Acumulado'    # Coluna para o eixo Y
+# Cria o selectbox
+estado_selecionado = st.sidebar.selectbox(
+    "Escolha um estado:",
+    estados,
+    index=0  # Paraná selecionado por padrão
 )
 
 
+# Filtra os dados geoespaciais pelo estado escolhido
+gdf_estado = gdf[gdf['NM_UF'] == estado_selecionado]
 
-    tema02.bar_chart(df,
-       x='Vendedor',      # Coluna para o eixo X
-       y='Faturamento'              )
+# Centraliza o mapa na média de latitude e longitude do estado
+centro = [gdf_estado.geometry.centroid.y.mean(), gdf_estado.geometry.centroid.x.mean()]
 
+m = folium.Map(location=centro, zoom_start=7)
+
+# Adiciona os municípios do estado
+folium.GeoJson(
+    gdf_estado,
+    tooltip=folium.GeoJsonTooltip(fields=['NM_MUN'], aliases=['Município:']),
+    style_function=lambda x: {
+        'fillColor': 'none',   # sem preenchimento
+        'color': 'green',      # cor da borda
+        'weight': 1,           # espessura da linha (quanto menor, mais fino)
+        'opacity': 0.6,       # transparência da borda
+        'fillColor': 'lightgreen',
+        'fillOpacity': 0.7
+
+    }
+).add_to(m)
+
+# Folium_static com largura em pixels (ex.: 1200)
+folium_static(m, width=1200, height=520)
 
