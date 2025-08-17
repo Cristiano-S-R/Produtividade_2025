@@ -7,16 +7,17 @@ import gdown
 
 st.set_page_config(layout="wide")
 
-# URL direta do Google Drive
+# ID do arquivo
 file_id = "1LLsanCjUXpeGhujc9hZE40NOzMCkFxby"
+
+# URL formatada para download direto
 url = f"https://drive.google.com/uc?id={file_id}"
-output = "municipios.zip"
 
-# Baixa o arquivo localmente
-gdown.download(url, output, quiet=False)
+# Nome do arquivo local
+output = "BR_Municipios_2024.zip"
 
-# Lê o shapefile zipado
-gdf = gpd.read_file(f"zip://{output}")
+# Baixar o arquivo
+gdf = gdown.download(url, output, quiet=False)
 
 st.sidebar.image("logo_agro.jpg", use_container_width=True)
 # Lista de estados únicos
@@ -60,6 +61,7 @@ folium.GeoJson(
 
 # Folium_static com largura em pixels (ex.: 1200)
 folium_static(m, width=1200, height=520)
+
 
 
 
