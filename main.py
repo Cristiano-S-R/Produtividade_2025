@@ -2,18 +2,14 @@ import streamlit as st
 import folium
 from streamlit_folium import folium_static
 import geopandas as gpd
-import gdown
+
 
 
 st.set_page_config(layout="wide")
 
-# Baixa um arquivo (ex: .geojson)
-url = 'https://drive.google.com/file/d/1u26SePxto9RDASJigq5AT6EBkowW75LY/view?usp=sharing'  # Substitua pelo ID real!
-output = 'arquivo.geojson'
-gdown.download(url, output, quiet=False)
+local = 'https://drive.google.com/file/d/1u26SePxto9RDASJigq5AT6EBkowW75LY/view?usp=drive_link'
+gdf = gpd.read_file(local)
 
-# Lê o arquivo baixado
-gdf = gpd.read_file(output)
 
 st.sidebar.image("logo_agro.jpg", use_container_width=True)
 # Lista de estados únicos
@@ -57,6 +53,7 @@ folium.GeoJson(
 
 # Folium_static com largura em pixels (ex.: 1200)
 folium_static(m, width=1200, height=520)
+
 
 
 
