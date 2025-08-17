@@ -8,27 +8,9 @@ import os
 
 
 st.set_page_config(layout="wide")
-# 1️⃣ Configurações do download
-file_id = "1LLsanCjUXpeGhujc9hZE40NOzMCkFxby"
-url = f"https://drive.google.com/uc?id={file_id}"
-output_zip = "BR_Municipios_2024.zip"
-extract_folder = "BR_Municipios_2024"
 
-# 2️⃣ Baixar o arquivo
-gdown.download(url, output_zip, quiet=False)
-
-# 3️⃣ Extrair o ZIP
-with zipfile.ZipFile(output_zip, 'r') as zip_ref:
-    zip_ref.extractall(extract_folder)
-
-# 4️⃣ Encontrar o shapefile na pasta extraída
-shp_files = [f for f in os.listdir(extract_folder) if f.endswith(".shp")]
-if not shp_files:
-    raise FileNotFoundError("Nenhum arquivo .shp encontrado na pasta extraída.")
-shp_path = os.path.join(extract_folder, shp_files[0])
-
-# 5️⃣ Carregar o shapefile com geopandas
-gdf = gpd.read_file(shp_path)
+local = 'C:/Users/cris/Documents/Streamlit/BR_Municipios_2024'
+gdf = gpd.read_file(local)
 
 
 st.sidebar.image("logo_agro.jpg", use_container_width=True)
@@ -73,6 +55,7 @@ folium.GeoJson(
 
 # Folium_static com largura em pixels (ex.: 1200)
 folium_static(m, width=1200, height=520)
+
 
 
 
