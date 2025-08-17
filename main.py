@@ -6,9 +6,26 @@ import geopandas as gpd
 
 
 st.set_page_config(layout="wide")
+import gdown
 
-local = 'https://drive.google.com/file/d/1u26SePxto9RDASJigq5AT6EBkowW75LY/view?usp=sharing'
-gdf = gpd.read_file(local)
+
+# Seu link do Google Drive
+url = 'https://drive.google.com/file/d/1u26SePxto9RDASJigq5AT6EBkowW75LY/view?usp=sharing'
+
+# Extrair o ID do arquivo do URL
+file_id = url.split('/')[-2]
+
+# Definir o caminho de destino no seu computador (por exemplo, na mesma pasta do seu script)
+local_path = './seu_arquivo.zip' # Altere o nome e a extensão conforme o seu arquivo
+
+# Baixar o arquivo do Google Drive
+gdown.download(f'https://drive.google.com/uc?id={file_id}', local_path, quiet=False)
+
+# Agora, o arquivo está no seu computador.
+# Use o geopandas para ler o arquivo a partir do caminho local
+gdf = gpd.read_file(local_path)
+
+
 
 
 st.sidebar.image("logo_agro.jpg", use_container_width=True)
@@ -53,6 +70,7 @@ folium.GeoJson(
 
 # Folium_static com largura em pixels (ex.: 1200)
 folium_static(m, width=1200, height=520)
+
 
 
 
