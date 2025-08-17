@@ -12,7 +12,7 @@ import os
 import geopandas as gpd
 
 # Link direto do Google Drive
-direct_link = "https://drive.google.com/drive/folders/1pKRb41q2wQuIyBJRHH33dQezGXYSbKms?usp=drive_link"
+direct_link = "https://drive.google.com/drive/folders/1pKRb41q2wQuIyBJRHH33dQezGXYSbKms?usp=sharing"
 output_zip = "BR_Municipios_2024.zip"
 extracted_folder = "BR_Municipios_2024_folder"
 
@@ -83,6 +83,7 @@ folium.GeoJson(
 
 # Folium_static com largura em pixels (ex.: 1200)
 folium_static(m, width=1200, height=520)
+
 
 
 
